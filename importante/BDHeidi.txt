@@ -1,0 +1,80 @@
+-- Tabla Torneos
+CREATE TABLE Torneos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    fechaInicio DATE,
+    fechaFin DATE,
+    cantidadEquipos INT,
+    CHECK (cantidadEquipos IN (8, 10, 12, 14, 16))
+);
+
+-- Tabla Equipos
+CREATE TABLE Equipos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    escudo VARCHAR(255), -- Puede ser una URL o imagen
+    ciudad VARCHAR(100),
+    fechaFundacion DATE
+);
+
+-- Tabla Jugadores
+CREATE TABLE Jugadores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    apellido VARCHAR(100) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    fechaNacimiento DATE,
+    posicion ENUM('arquero', 'defensor', 'central', 'delantero'),
+    numeroDeCamiseta INT,
+    equipo_id INT,
+    FOREIGN KEY (equipo_id) REFERENCES Equipos(id)
+);
+
+-- Tabla Roles
+CREATE TABLE Roles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    rol ENUM('titular/capitan', 'titular', 'suplente')
+);
+
+-- Tabla Fixture
+CREATE TABLE Fixture (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    idTorneo INT,
+    FOREIGN KEY (idTorneo) REFERENCES Torneos(id)
+);
+
+-- Tabla Fechas
+CREATE TABLE Fechas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    idFixture INT,
+    fechaPartido DATE,
+    FOREIGN KEY (idFixture) REFERENCES Fixture(id)
+);
+
+-- Tabla Partidos
+CREATE TABLE Partidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    idEquipoLocal INT,
+    idEquipoVisitante INT,
+    golLocal INT,
+    golVisitante INT,
+    FOREIGN KEY (idEquipoLocal) REFERENCES Equipos(id),
+    FOREIGN KEY (idEquipoVisitante) REFERENCES Equipos(id)
+);
+
+-- Tabla Arbitros
+CREATE TABLE Arbitros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    apyn VARCHAR(200),
+    idPartido INT,
+    FOREIGN KEY (idPartido) REFERENCES Partidos(id)
+);
+
+-- Tabla Canchas
+CREATE TABLE Canchas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    ubicacion VARCHAR(255),
+    tamaño ENUM('F5', 'F6', 'F7', 'F8'),
+    tipoSuperficie ENUM('piso', 'pasto')
+);
+|
