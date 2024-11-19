@@ -8,6 +8,7 @@ class Partido(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     idEquipoLocal = Column(Integer, ForeignKey('equipos.id'), nullable=False)
     idEquipoVisitante = Column(Integer, ForeignKey('equipos.id'), nullable=False)
+    idCancha = Column(Integer, ForeignKey('canchas.id'), nullable=False)
     golLocal = Column(Integer, default=0)
     golVisitante = Column(Integer, default=0)
     fechaPartido = Column(Date, nullable=False)
@@ -18,12 +19,16 @@ class Partido(Base):
     # Relación con el equipo visitante
     equipoVisitante = relationship("Equipo", foreign_keys=[idEquipoVisitante], backref="partidos_visitantes")
 
+    # Relación con la cancha
+    cancha = relationship("Cancha")  # Relación con Cancha
+
     # CRUD Partido
     @classmethod
-    def agregar_partido(cls, idEquipoLocal: int, idEquipoVisitante: int, golLocal: int, golVisitante: int, fechaPartido: Date):
+    def agregar_partido(cls, idEquipoLocal: int, idEquipoVisitante: int, idCancha:int, golLocal: int, golVisitante: int, fechaPartido: Date):
         nuevo_partido = cls(
             idEquipoLocal=idEquipoLocal,
             idEquipoVisitante=idEquipoVisitante,
+            idCancha=idCancha,
             golLocal=golLocal,  # Agregar este parámetro
             golVisitante=golVisitante,  # Agregar este parámetro
             fechaPartido=fechaPartido
@@ -56,12 +61,13 @@ class Partido(Base):
             return {"message": "Partido no encontrado"}
         
     @classmethod
-    def modificar_partido(cls, partido_id: int, idEquipoLocal: int, idEquipoVisitante: int, golLocal: int, golVisitante: int, fechaPartido: Date):
+    def modificar_partido(cls, partido_id: int, idEquipoLocal: int, idEquipoVisitante: int,idCancha: int, golLocal: int, golVisitante: int, fechaPartido: Date):
         session = sessionmaker(bind=engine)()
         partido = session.query(cls).filter(cls.id == partido_id).first()  # Busca el partido por ID
         if partido:
             partido.idEquipoLocal = idEquipoLocal
             partido.idEquipoVisitante = idEquipoVisitante
+            partido.idCancha = idCancha
             partido.golLocal = golLocal
             partido.golVisitante = golVisitante
             partido.fechaPartido = fechaPartido

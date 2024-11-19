@@ -11,6 +11,7 @@ def agregar_partido(partido: PartidoModel):
     nuevo_partido = Partido.agregar_partido(
         partido.idEquipoLocal,
         partido.idEquipoVisitante,
+        partido.idCancha,
         partido.golLocal,  # Asegúrate de incluir golLocal
         partido.golVisitante,  # Asegúrate de incluir golVisitante
         partido.fechaPartido

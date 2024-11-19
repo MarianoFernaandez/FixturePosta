@@ -43,9 +43,20 @@ class RolModel(BaseModel):
 class PartidoModel(BaseModel):
     idEquipoLocal: int
     idEquipoVisitante: int
+    idCancha: int 
     golLocal: Optional[int] = None  # Cambia a Optional
     golVisitante: Optional[int] = None  # Cambia a Optional
     fechaPartido: date
+
+    class Config:
+        from_attributes =True
+        
+class CanchaModel(BaseModel):
+    id: int  # ID de la cancha, requerido
+    nombre: str
+    ubicacion: str
+    tamaño: str  # Puedes usar un tipo específico o ENUM si es necesario
+    tipoSuperficie: str  # Puedes usar un tipo específico o ENUM si es necesario
 
     class Config:
         from_attributes = True

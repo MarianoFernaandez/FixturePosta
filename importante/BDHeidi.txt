@@ -54,11 +54,13 @@ CREATE TABLE partidos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idEquipoLocal INT,
     idEquipoVisitante INT,
+    idCancha INT,  -- Nueva columna para la cancha
     golLocal INT,
     golVisitante INT,
     fechaPartido DATE,
-    FOREIGN KEY (idEquipoLocal) REFERENCES equipos(id),
-    FOREIGN KEY (idEquipoVisitante) REFERENCES equipos(id)
+    FOREIGN KEY (idEquipoLocal) REFERENCES equipos(id), 
+    FOREIGN KEY (idEquipoVisitante) REFERENCES equipos(id),
+    FOREIGN KEY (idCancha) REFERENCES canchas(id)  -- Clave foránea a la tabla canchas
 );
 
 -- Tabla Arbitros
