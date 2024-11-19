@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from datetime import date
 from pydantic import BaseModel
+from typing import Optional
 
 class TorneoModel(BaseModel):
     id: int
@@ -35,6 +36,16 @@ class JugadorModel(BaseModel):
 class RolModel(BaseModel):
     id: int  # ID del rol (esto puede ser opcional en algunos casos, dependiendo de cómo se use)
     rol: str  # Nombre del rol (por ejemplo, 'titular', 'suplente', etc.)
+
+    class Config:
+        from_attributes = True
+
+class PartidoModel(BaseModel):
+    idEquipoLocal: int
+    idEquipoVisitante: int
+    golLocal: Optional[int] = None  # Cambia a Optional
+    golVisitante: Optional[int] = None  # Cambia a Optional
+    fechaPartido: date
 
     class Config:
         from_attributes = True

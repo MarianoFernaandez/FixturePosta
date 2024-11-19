@@ -7,6 +7,7 @@ from endpointTorneo import router as router_torneo
 from endpointEquipo import router as router_equipo
 from endpointJugador import router as router_jugador
 from endpointRol import router as router_rol
+from endpointPartido import router as router_partido
 
 # Crear las tablas en la base de datos
 Base.metadata.create_all(bind=engine)
@@ -38,3 +39,4 @@ app.include_router(router_torneo)
 app.include_router(router_equipo)
 app.include_router(router_jugador)
 app.include_router(router_rol)
+app.include_router(router_partido)

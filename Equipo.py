@@ -11,6 +11,7 @@ class Equipo(Base):
     ciudad = Column(String(255), nullable=False)
     fechaFundacion = Column(Date, nullable=False)
 
+    
     # Relación con TorneoEquipo se define después
     # equipos = relationship("TorneoEquipo", back_populates="equipo")
 
@@ -72,3 +73,7 @@ from torneoEquipo import TorneoEquipo
 
 # Definir la relación aquí, después de que ambas clases están definidas
 Equipo.equipos = relationship("TorneoEquipo", back_populates="equipo")
+
+# Relaciones con Partido
+partidos_locales = relationship("Partido", foreign_keys='Partido.idEquipoLocal', backref="equipoLocal")
+partidos_visitantes = relationship("Partido", foreign_keys='Partido.idEquipoVisitante', backref="equipoVisitante")

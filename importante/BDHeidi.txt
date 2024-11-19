@@ -50,14 +50,15 @@ CREATE TABLE Fechas (
 );
 
 -- Tabla Partidos
-CREATE TABLE Partidos (
+CREATE TABLE partidos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idEquipoLocal INT,
     idEquipoVisitante INT,
     golLocal INT,
     golVisitante INT,
-    FOREIGN KEY (idEquipoLocal) REFERENCES Equipos(id),
-    FOREIGN KEY (idEquipoVisitante) REFERENCES Equipos(id)
+    fechaPartido DATE,
+    FOREIGN KEY (idEquipoLocal) REFERENCES equipos(id),
+    FOREIGN KEY (idEquipoVisitante) REFERENCES equipos(id)
 );
 
 -- Tabla Arbitros
