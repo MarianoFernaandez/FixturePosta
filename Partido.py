@@ -22,6 +22,9 @@ class Partido(Base):
     # Relación con la cancha
     cancha = relationship("Cancha")  # Relación con Cancha
 
+    # Relación con la Fecha (una fecha puede tener múltiples partidos)
+    idFecha = Column(Integer, ForeignKey('fechas.id'), nullable=False)
+
     # CRUD Partido
     @classmethod
     def agregar_partido(cls, idEquipoLocal: int, idEquipoVisitante: int, idCancha:int, golLocal: int, golVisitante: int, fechaPartido: Date):

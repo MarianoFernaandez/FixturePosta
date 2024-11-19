@@ -68,3 +68,18 @@ class ArbitroModel(BaseModel):
 
     class Config:
         from_attributes = True
+
+class FechaModel(BaseModel):
+    id: int
+    idFixture: int
+    fechaPartido: date
+
+    class Config:
+        from_attributes = True
+
+class FixtureModel(BaseModel):
+    id: int
+    idTorneo: int  # Clave foránea a la tabla Torneos
+
+    class Config:
+        orm_mode = True
