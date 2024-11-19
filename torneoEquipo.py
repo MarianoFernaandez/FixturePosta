@@ -1,16 +1,12 @@
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 from database import Base
-from models import TorneoEquipo  # Importar TorneoEquipo si está en otro archivo
-
+from Torneo import Torneo  # Asegúrate de que esta importación esté presente
 
 class TorneoEquipo(Base):
     __tablename__ = 'torneo_equipo'
 
-    id_torneo_equipo = Column(Integer, primary_key=True, autoincrement=True)
-    id_torneo = Column(Integer, ForeignKey('torneos.id_torneo'), nullable=False)
-    id_equipo = Column(Integer, ForeignKey('equipos.id_equipo'), nullable=False)
+    torneo_id = Column(Integer, ForeignKey('torneos.id'), primary_key=True)  # Asegúrate de que la referencia sea correcta
+    equipo_id = Column(Integer, ForeignKey('Equipos(id)'), nullable=False)
 
-    torneo = relationship("Torneo", back_populates="torneos")
-    equipo = relationship("Equipo", back_populates="torneos")
-
+    torneo = relationship("Torneo", back_populates="torneos")  # Esta relación ahora debería funcionar correctamente
