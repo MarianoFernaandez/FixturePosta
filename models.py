@@ -1,13 +1,13 @@
 from pydantic import BaseModel
 from datetime import date
+from pydantic import BaseModel
 
-# Modelo para la tabla Torneos
 class TorneoModel(BaseModel):
     id: int = None
     nombre: str = None
-    fechaInicio: date = None  # Usamos datetime.date para fechas
+    fechaInicio: date = None
     fechaFin: date = None
-    cantidadEquipos: int = None
+    cantidadEquipos: int = None 
 
     class Config:
         from_attributes = True

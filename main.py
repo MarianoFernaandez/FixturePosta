@@ -3,8 +3,7 @@ from sqlalchemy.orm import declarative_base, sessionmaker, relationship, joinedl
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from database import Base, engine, SessionLocal
-from fastapi.staticfiles import StaticFiles #Importante para poder montar los Static y simplificar
-#from endpoints import router #Importante para poder llamar a los endpoints desde el main
+from endpointTorneo import router as router_torneo
 
 # Crear las tablas en la base de datos
 Base.metadata.create_all(bind=engine)
@@ -31,6 +30,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def read_root():
-    return {"message": "¡FastAPI está funcionando correctamente!"}
+#Agrega los Endpoint
+
+app.include_router(router_torneo)

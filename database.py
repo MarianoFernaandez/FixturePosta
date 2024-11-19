@@ -20,17 +20,9 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 # Declarativa base para la creación de los modelos
 Base = declarative_base()
 
-# Dependency para obtener la sesión de la base de datos
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-# Probar la conexión
-try:
-    with engine.connect() as connection:
-        print("¡Conexión exitosa!")
-except Exception as e:
-    print(f"Error al conectar: {e}")
+# # Probar la conexión
+# try:
+#     with engine.connect() as connection:
+#         print("¡Conexión exitosa!")
+# except Exception as e:
+#     print(f"Error al conectar: {e}")

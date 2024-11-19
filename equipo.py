@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String, Date
-from sqlalchemy import sessionmaker
-from database import Base, engine, relationship
+from sqlalchemy.orm import sessionmaker, relationship
+from database import Base, engine
 from models import EquipoModel
 
-#Defino la clase Equipo
+# Defino la clase Equipo
 class Equipo(Base): 
     __tablename__ = 'equipos'
 
@@ -13,12 +13,13 @@ class Equipo(Base):
     ciudad = Column(String(100))
     fechaFundacion = Column(Date)
 
-    #Relaciono la clase Equipo con Jugador
-
+    # Relación con Jugadores
     jugadores = relationship("Jugador", back_populates="equipo")
+    
+    # Relación con TorneoEquipo
+    torneos = relationship("TorneoEquipo", back_populates="equipo")
 
-    #Crud Equipo
-
+    # CRUD Equipo
     @classmethod
     def agregar_equipo(cls, nombre: str, escudo: str, ciudad: str, fechaFundacion: Date):
         nuevo_equipo = cls(
@@ -78,5 +79,17 @@ class Equipo(Base):
             fechaFundacion=equipo_existente.fechaFundacion
         )
 
-
-
+    @classmethod
+    def asociar_torneo(cls, equipo_id: int, torneo_id: int):
+        from TorneoEquipo import TorneoEquipo
+        session = sessionmaker(bind=engine)()
+        try:
+            # Crear la relación en la tabla intermedia
+            relacion = TorneoEquipo(torneo_id=torneo_id, equipo_id=equipo_id)
+            session.add(relacion)
+            session.commit()
+        except Exception as e:
+            session.rollback()
+            raise Exception(f"Error al asociar el equipo al torneo: {e}")
+        finally:
+            session.close()

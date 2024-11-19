@@ -3,7 +3,7 @@ from sqlalchemy import sessionmaker
 from database import Base, engine, relationship
 from models import JugadorModel
 
-#Defino la clase Jugador
+# Defino la clase Jugador
 class Jugador(Base): 
     __tablename__ = 'jugadores'
 
@@ -13,22 +13,23 @@ class Jugador(Base):
     posicion = Column(Enum('arquero', 'defensor', 'central', 'delantero', name='posicion_enum'))
     numeroCamiseta = Column(Integer)
     equipo_id = Column(Integer, ForeignKey('equipos.id_equipo'))
+    rol_id = Column(Integer, ForeignKey('roles.id'))  # Nuevo campo para el rol
 
+    # Relaciono la clase Jugador con Equipo
+    equipo = relationship("Equipo", back_populates="jugadores")
+    rol = relationship("Rol")  # Relación con Rol
 
-    #Relaciono la clase Jugador con Equipo
-
-    jugadores = relationship("Equipo", back_populates="jugador")
-
-    #Crud Jugador
+    # CRUD Jugador
 
     @classmethod
-    def agregar_jugador(cls, apyn: str, fechaNacimiento: Date, posicion: str, numeroCamiseta: int, equipo_id: int):
+    def agregar_jugador(cls, apyn: str, fechaNacimiento: Date, posicion: str, numeroCamiseta: int, equipo_id: int, rol_id: int):
         nuevo_jugador = cls(
             apyn=apyn,
             fechaNacimiento=fechaNacimiento,
             posicion=posicion,
             numeroCamiseta=numeroCamiseta,
-            equipo_id=equipo_id
+            equipo_id=equipo_id,
+            rol_id=rol_id  # Asignar el rol al jugador
         )
         session = sessionmaker(bind=engine)()
         session.add(nuevo_jugador)
@@ -42,8 +43,8 @@ class Jugador(Base):
         session = sessionmaker(bind=engine)()
         jugadores = session.query(cls).all()
         session.close()
-        return 
-    
+        return jugadores  # Devolver la lista de jugadores
+
     @classmethod
     def buscar_jugador(cls, jugador_id: int):
         session = sessionmaker(bind=engine)()
@@ -56,7 +57,8 @@ class Jugador(Base):
                 fechaNacimiento=jugador.fechaNacimiento,
                 posicion=jugador.posicion,
                 numeroCamiseta=jugador.numeroCamiseta,
-                equipo_id=jugador.equipo_id
+                equipo_id=jugador.equipo_id,
+                rol_id=jugador.rol_id  # Incluir el rol_id en el modelo
             )
         return None
 
@@ -85,6 +87,7 @@ class Jugador(Base):
         jugador_existente.posicion = jugador_in.posicion
         jugador_existente.numeroCamiseta = jugador_in.numeroCamiseta
         jugador_existente.equipo_id = jugador_in.equipo_id
+        jugador_existente.rol_id = jugador_in.rol_id  # Actualizar el rol del jugador
 
         session.commit()
         session.refresh(jugador_existente)
@@ -96,7 +99,6 @@ class Jugador(Base):
             fechaNacimiento=jugador_existente.fechaNacimiento,
             posicion=jugador_existente.posicion,
             numeroCamiseta=jugador_existente.numeroCamiseta,
-            equipo_id=jugador_existente.equipo_id
+            equipo_id=jugador_existente.equipo_id,
+            rol_id=jugador_existente.rol_id  # Incluir el rol_id en el modelo
         )
-
-

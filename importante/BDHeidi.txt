@@ -77,4 +77,12 @@ CREATE TABLE Canchas (
     tamaño ENUM('F5', 'F6', 'F7', 'F8'),
     tipoSuperficie ENUM('piso', 'pasto')
 );
-|
+-- Tabla Torneo_equipo
+-- Tabla intermedia para la relación muchos a muchos entre Torneos y Equipos
+CREATE TABLE torneo_equipo (
+    torneo_id INT,
+    equipo_id INT,
+    PRIMARY KEY (torneo_id, equipo_id),
+    FOREIGN KEY (torneo_id) REFERENCES Torneos(id),
+    FOREIGN KEY (equipo_id) REFERENCES Equipos(id)
+);
