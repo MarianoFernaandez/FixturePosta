@@ -14,7 +14,8 @@ class Jugador(Base):
 
     # Relación con Equipo
     equipo = relationship("Equipo", back_populates="jugadores")
-
+    
+    roles = relationship("Rol", secondary="jugador_rol", back_populates="jugadores")
     # CRUD Jugador
     @classmethod
     def agregar_jugador(cls, apyn: str, fechaNacimiento: Date, posicion: str, numeroDeCamiseta: int, equipo_id: int):

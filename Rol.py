@@ -8,6 +8,8 @@ class Rol(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     rol = Column(String(50), nullable=False)  # Cambiado de 'nombre' a 'rol'
 
+    jugadores = relationship("Jugador", secondary="jugador_rol", back_populates="roles")
+    
     # CRUD Rol
     @classmethod
     def agregar_rol(cls, rol: str):

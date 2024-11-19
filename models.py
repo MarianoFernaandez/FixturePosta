@@ -83,4 +83,13 @@ class FixtureModel(BaseModel):
     idFecha: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+
+#ENDPOINTS RELACIONADOS
+
+class JugadorRolModel(BaseModel):
+    jugador_id: int
+    rol_id: int
+
+    class Config:
+        from_attributes = True

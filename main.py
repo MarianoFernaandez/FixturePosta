@@ -12,6 +12,8 @@ from endpointCancha import router as router_cancha
 from endpointArbitro import router as router_arbitro
 from endpointFecha import router as router_fecha
 from endpointFixture import router as router_fixture
+#ENDPOINTS RELACIONADOS
+from endpointJugadorRol import router as router_jugador_rol
 
 # Crear las tablas en la base de datos
 Base.metadata.create_all(bind=engine)
@@ -48,3 +50,5 @@ app.include_router(router_cancha)
 app.include_router(router_arbitro)
 app.include_router(router_fecha)
 app.include_router(router_fixture)
+#ENDPOINTS RELACIONADOS
+app.include_router(router_jugador_rol)
