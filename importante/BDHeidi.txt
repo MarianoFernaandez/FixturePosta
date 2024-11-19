@@ -20,8 +20,7 @@ CREATE TABLE Equipos (
 -- Tabla Jugadores
 CREATE TABLE Jugadores (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    apellido VARCHAR(100) NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
+    apyn VARCHAR(255) NOT NULL,
     fechaNacimiento DATE,
     posicion ENUM('arquero', 'defensor', 'central', 'delantero'),
     numeroDeCamiseta INT,

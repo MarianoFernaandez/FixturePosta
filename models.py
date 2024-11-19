@@ -22,3 +22,12 @@ class EquipoModel(BaseModel):
     class Config:
         from_attributes = True
 
+class JugadorModel(BaseModel):
+    apyn: str  
+    fechaNacimiento: date  
+    posicion: str  
+    numeroDeCamiseta: int  
+    equipo_id: int  
+
+    class Config:
+        from_attributes = True

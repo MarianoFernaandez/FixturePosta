@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from database import Base, engine, SessionLocal
 from endpointTorneo import router as router_torneo
 from endpointEquipo import router as router_equipo
+from endpointJugador import router as router_jugador
 
 # Crear las tablas en la base de datos
 Base.metadata.create_all(bind=engine)
@@ -34,3 +35,4 @@ app.add_middleware(
 
 app.include_router(router_torneo)
 app.include_router(router_equipo)
+app.include_router(router_jugador)
