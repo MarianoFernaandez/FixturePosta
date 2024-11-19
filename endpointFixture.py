@@ -8,10 +8,7 @@ router = APIRouter()
 # Endpoint POST para agregar un Fixture
 @router.post("/fixtures/nuevo/", tags=["Fixture"], summary="Crear un nuevo Fixture", description="Este endpoint crea un nuevo Fixture en la base de datos.")
 def agregar_fixture(fixture: FixtureModel):
-    nuevo_fixture = Fixture.agregar_fixture(
-        fixture.idTorneo,
-        fixture.idPartido
-    )
+    nuevo_fixture = Fixture.agregar_fixture(fixture.idTorneo, fixture.idFecha)  # Asegúrate de pasar idFecha
     return {"message": "Fixture creado exitosamente", "fixture_id": nuevo_fixture.id}
 
 # Endpoint GET para obtener todos los Fixtures
@@ -29,7 +26,7 @@ def eliminar_fixture(fixture_id: int):
 # Endpoint PUT para modificar un Fixture
 @router.put("/fixtures/{fixture_id}", tags=["Fixture"], summary="Modificar un Fixture", description="Este endpoint modifica un Fixture existente en la base de datos.")
 def modificar_fixture(fixture_id: int, fixture: FixtureModel):
-    resultado = Fixture.modificar_fixture(fixture_id, fixture.idTorneo, fixture.idPartido)
+    resultado = Fixture.modificar_fixture(fixture_id, fixture.idTorneo, fixture.idFecha)  # Asegúrate de usar idFecha
     if resultado["message"] == "Fixture modificado exitosamente":
         return {"message": "Fixture modificado exitosamente"}
     else:

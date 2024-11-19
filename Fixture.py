@@ -7,14 +7,14 @@ class Fixture(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     idTorneo = Column(Integer, ForeignKey('torneos.id'), nullable=False)  # Clave foránea a la tabla Torneos
-
+    idFecha = Column(Integer, ForeignKey('fechas.id'), nullable=False)
     # Relación con Torneo
     torneo = relationship("Torneo", backref="fixtures")  # Un torneo puede tener múltiples fixtures
 
     # CRUD Fixture
     @classmethod
-    def agregar_fixture(cls, idTorneo: int):
-        nuevo_fixture = cls(idTorneo=idTorneo)
+    def agregar_fixture(cls, idTorneo: int, idFecha: int):
+        nuevo_fixture = cls(idTorneo=idTorneo, idFecha=idFecha)  # Asegúrate de incluir idFecha
         session = sessionmaker(bind=engine)()
         session.add(nuevo_fixture)
         session.commit()
@@ -43,11 +43,12 @@ class Fixture(Base):
             return {"message": "Fixture no encontrado"}
 
     @classmethod
-    def modificar_fixture(cls, fixture_id: int, idTorneo: int):
+    def modificar_fixture(cls, fixture_id: int, idTorneo: int, idFecha: int):
         session = sessionmaker(bind=engine)()
         fixture = session.query(cls).filter(cls.id == fixture_id).first()  # Busca el fixture por ID
         if fixture:
             fixture.idTorneo = idTorneo
+            fixture.idFecha = idFecha
             session.commit()  # Confirma los cambios
             session.close()
             return {"message": "Fixture modificado exitosamente"}

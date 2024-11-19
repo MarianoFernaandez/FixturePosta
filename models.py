@@ -80,6 +80,7 @@ class FechaModel(BaseModel):
 class FixtureModel(BaseModel):
     id: int
     idTorneo: int  # Clave foránea a la tabla Torneos
+    idFecha: int
 
     class Config:
         orm_mode = True
