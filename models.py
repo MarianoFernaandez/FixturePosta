@@ -31,3 +31,10 @@ class JugadorModel(BaseModel):
 
     class Config:
         from_attributes = True
+
+class RolModel(BaseModel):
+    id: int  # ID del rol (esto puede ser opcional en algunos casos, dependiendo de cómo se use)
+    rol: str  # Nombre del rol (por ejemplo, 'titular', 'suplente', etc.)
+
+    class Config:
+        from_attributes = True
