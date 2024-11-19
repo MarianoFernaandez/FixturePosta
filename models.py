@@ -60,3 +60,11 @@ class CanchaModel(BaseModel):
 
     class Config:
         from_attributes = True
+
+class ArbitroModel(BaseModel):
+    id: int  
+    apyn: str  
+    idPartido: int  
+
+    class Config:
+        from_attributes = True
