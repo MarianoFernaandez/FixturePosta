@@ -4,6 +4,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from database import Base, engine, SessionLocal
 from endpointTorneo import router as router_torneo
+from endpointEquipo import router as router_equipo
 
 # Crear las tablas en la base de datos
 Base.metadata.create_all(bind=engine)
@@ -32,3 +33,4 @@ app.add_middleware(
 #Agrega los Endpoint
 
 app.include_router(router_torneo)
+app.include_router(router_equipo)
